@@ -44,7 +44,7 @@ class SignaturePadHtml extends SignaturePadBase {
     _subscriptions.addAll([
       canvas.onMouseDown.listen(handleMouseDown),
       canvas.onMouseMove
-          .transform(throttle(this.throttleDuration))
+          .throttle(this.throttleDuration)
           .listen(handleMouseMove),
       canvas.onMouseUp.listen(handleMouseUp),
     ]);
@@ -57,7 +57,7 @@ class SignaturePadHtml extends SignaturePadBase {
     _subscriptions.addAll([
       canvas.onTouchStart.listen(handleTouchStart),
       canvas.onTouchMove
-          .transform(throttle(this.throttleDuration))
+          .throttle(this.throttleDuration)
           .listen(handleTouchMove),
       canvas.onTouchEnd.listen(handleTouchEnd),
     ]);
