@@ -8,10 +8,10 @@ class Mark extends Point<double> {
   int get timeMs => time.millisecondsSinceEpoch;
 
   double velocityFrom(Mark start) {
-    if (this.timeMs == start.timeMs) {
+    if (timeMs == start.timeMs) {
       return 1.0;
     }
-    var result = this.distanceTo(start) / (this.timeMs - start.timeMs);
+    var result = distanceTo(start) / (timeMs - start.timeMs);
     return result;
   }
 }

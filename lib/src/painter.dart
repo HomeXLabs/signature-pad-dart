@@ -17,31 +17,31 @@ class SignaturePadPainter extends CustomPainter {
     if (lastSize == null) {
       return null;
     }
-    var recorder = new ui.PictureRecorder();
-    var origin = new Offset(0.0, 0.0);
-    var paintBounds = new Rect.fromPoints(
+    var recorder = ui.PictureRecorder();
+    var origin =  Offset(0.0, 0.0);
+    var paintBounds =  Rect.fromPoints(
         lastSize.topLeft(origin), lastSize.bottomRight(origin));
-    var canvas = new Canvas(recorder, paintBounds);
+    var canvas =  Canvas(recorder, paintBounds);
 
     _paintPoints(canvas, lastSize, 0);
 
     // Add grey text in the bottom-right corner
     if (opts.signatureText != null) {
-      var paragraphBuilder = new ui.ParagraphBuilder(
-        new ui.ParagraphStyle(
+      var paragraphBuilder =  ui.ParagraphBuilder(
+         ui.ParagraphStyle(
           textDirection: ui.TextDirection.ltr,
         ),
       );
       var style =
-          new ui.TextStyle(color: new Color.fromRGBO(100, 100, 100, 1.0));
+           ui.TextStyle(color:  Color.fromRGBO(100, 100, 100, 1.0));
       paragraphBuilder.pushStyle(style);
       paragraphBuilder.addText(opts.signatureText);
       paragraphBuilder.pop();
       var paragraph = paragraphBuilder.build();
-      paragraph.layout(new ui.ParagraphConstraints(width: lastSize.width));
+      paragraph.layout( ui.ParagraphConstraints(width: lastSize.width));
       canvas.drawParagraph(
         paragraph,
-        new Offset(
+         Offset(
           lastSize.width - paragraph.maxIntrinsicWidth,
           lastSize.height - paragraph.height,
         ),
@@ -51,10 +51,11 @@ class SignaturePadPainter extends CustomPainter {
     var picture = recorder.endRecording();
     var image =
         await picture.toImage(lastSize.width.round(), lastSize.height.round());
-    ByteData data = await image.toByteData(format: ui.ImageByteFormat.png);
+    var data = await image.toByteData(format: ui.ImageByteFormat.png);
     return data.buffer.asUint8List();
   }
 
+  @override
   void paint(Canvas canvas, Size size) {
     lastSize = size;
     _paintPoints(canvas, size, 0);
@@ -62,11 +63,11 @@ class SignaturePadPainter extends CustomPainter {
 
   void _paintPoints(Canvas canvas, Size size, int startIdx) {
     for (var i = startIdx; i < allPoints.length; i++) {
-      var point = this.allPoints[i];
-      var paint = new Paint()..color = colorFromColorString(opts.penColor);
+      var point = allPoints[i];
+      var paint =  Paint()..color = colorFromColorString(opts.penColor);
       paint.strokeWidth = 5.0;
-      var path = new Path();
-      var offset = new Offset(point.point.x, point.point.y);
+      var path =  Path();
+      var offset =  Offset(point.point.x, point.point.y);
       path.moveTo(point.point.x, point.point.y);
       var pointSize = point.size;
       if (pointSize == null || pointSize.isNaN) {
@@ -80,6 +81,7 @@ class SignaturePadPainter extends CustomPainter {
     }
   }
 
+  @override
   bool shouldRepaint(SignaturePadPainter oldDelegate) {
     return true;
   }

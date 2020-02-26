@@ -16,19 +16,19 @@ class Bezier {
 
     for (var i = 0.0; i <= steps; i += 1) {
       var t = i / steps;
-      var cx = this._point(
+      var cx = _point(
         t,
-        this.startPoint.x,
-        this.control1.x,
-        this.control2.x,
-        this.endPoint.x,
+        startPoint.x,
+        control1.x,
+        control2.x,
+        endPoint.x,
       );
       var cy = _point(
         t,
-        this.startPoint.y,
-        this.control1.y,
-        this.control2.y,
-        this.endPoint.y,
+        startPoint.y,
+        control1.y,
+        control2.y,
+        endPoint.y,
       );
       if (i > 0) {
         var xdiff = cx - px;
