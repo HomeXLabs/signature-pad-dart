@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:signature_pad_flutter/signature_pad_flutter.dart';
+import 'package:signature_pad_widget/signature_pad_widget.dart';
 
 void main() => runApp(new MyApp());
 

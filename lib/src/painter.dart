@@ -1,11 +1,10 @@
 import 'dart:async';
 import 'dart:ui' as ui;
 import 'dart:typed_data';
-
 import 'package:flutter/widgets.dart' hide TextStyle;
-import 'package:signature_pad_flutter/src/colors.dart';
-import 'package:signature_pad_flutter/src/point.dart';
-import 'package:signature_pad_flutter/src/signature_pad.dart';
+import 'package:signature_pad_widget/src/colors.dart';
+import 'package:signature_pad_widget/src/point.dart';
+import 'package:signature_pad_widget/src/signature_pad.dart';
 
 class SignaturePadPainter extends CustomPainter {
   final List<SPPoint> allPoints;

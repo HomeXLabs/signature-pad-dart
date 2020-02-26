@@ -1,7 +1,7 @@
 import 'dart:math';
 
-import 'package:signature_pad_flutter/src/bezier.dart';
-import 'package:signature_pad_flutter/src/mark.dart';
+import 'package:signature_pad_widget/src/bezier.dart';
+import 'package:signature_pad_widget/src/mark.dart';
 
 class SignaturePadOptions {
   final String penColor;

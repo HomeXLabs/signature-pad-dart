@@ -1,5 +1,5 @@
 import 'dart:math';
-import 'package:signature_pad_flutter/src/mark.dart';
+import 'package:signature_pad_widget/src/mark.dart';
 
 class Bezier {
   final Mark startPoint;

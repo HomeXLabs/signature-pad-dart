@@ -5,10 +5,10 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:signature_pad_flutter/src/mark.dart';
-import 'package:signature_pad_flutter/src/painter.dart';
-import 'package:signature_pad_flutter/src/point.dart';
-import 'package:signature_pad_flutter/src/signature_pad.dart';
+import 'package:signature_pad_widget/src/mark.dart';
+import 'package:signature_pad_widget/src/painter.dart';
+import 'package:signature_pad_widget/src/point.dart';
+import 'package:signature_pad_widget/src/signature_pad.dart';
 
 class SignaturePadController {
   _SignaturePadDelegate _delegate;
