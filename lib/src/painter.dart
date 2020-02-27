@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:ui' as ui;
 import 'dart:typed_data';
-import 'package:flutter/widgets.dart' hide TextStyle;
+import 'package:flutter/widgets.dart';
 import 'package:signature_pad_widget/src/colors.dart';
 import 'package:signature_pad_widget/src/point.dart';
 import 'package:signature_pad_widget/src/signature_pad.dart';
@@ -18,30 +18,29 @@ class SignaturePadPainter extends CustomPainter {
       return null;
     }
     var recorder = ui.PictureRecorder();
-    var origin =  Offset(0.0, 0.0);
-    var paintBounds =  Rect.fromPoints(
-        lastSize.topLeft(origin), lastSize.bottomRight(origin));
-    var canvas =  Canvas(recorder, paintBounds);
+    var origin = Offset(0.0, 0.0);
+    var paintBounds =
+        Rect.fromPoints(lastSize.topLeft(origin), lastSize.bottomRight(origin));
+    var canvas = Canvas(recorder, paintBounds);
 
     _paintPoints(canvas, lastSize, 0);
 
     // Add grey text in the bottom-right corner
     if (opts.signatureText != null) {
-      var paragraphBuilder =  ui.ParagraphBuilder(
-         ui.ParagraphStyle(
+      var paragraphBuilder = ui.ParagraphBuilder(
+        ui.ParagraphStyle(
           textDirection: ui.TextDirection.ltr,
         ),
       );
-      var style =
-           ui.TextStyle(color:  Color.fromRGBO(100, 100, 100, 1.0));
+      var style = ui.TextStyle(color: Color.fromRGBO(100, 100, 100, 1.0));
       paragraphBuilder.pushStyle(style);
       paragraphBuilder.addText(opts.signatureText);
       paragraphBuilder.pop();
       var paragraph = paragraphBuilder.build();
-      paragraph.layout( ui.ParagraphConstraints(width: lastSize.width));
+      paragraph.layout(ui.ParagraphConstraints(width: lastSize.width));
       canvas.drawParagraph(
         paragraph,
-         Offset(
+        Offset(
           lastSize.width - paragraph.maxIntrinsicWidth,
           lastSize.height - paragraph.height,
         ),
@@ -64,10 +63,10 @@ class SignaturePadPainter extends CustomPainter {
   void _paintPoints(Canvas canvas, Size size, int startIdx) {
     for (var i = startIdx; i < allPoints.length; i++) {
       var point = allPoints[i];
-      var paint =  Paint()..color = colorFromColorString(opts.penColor);
+      var paint = Paint()..color = colorFromColorString(opts.penColor);
       paint.strokeWidth = 5.0;
-      var path =  Path();
-      var offset =  Offset(point.point.x, point.point.y);
+      var path = Path();
+      var offset = Offset(point.point.x, point.point.y);
       path.moveTo(point.point.x, point.point.y);
       var pointSize = point.size;
       if (pointSize == null || pointSize.isNaN) {

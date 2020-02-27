@@ -6,6 +6,7 @@ class Bezier {
   final Point control1;
   final Point control2;
   final Mark endPoint;
+
   Bezier(this.startPoint, this.control1, this.control2, this.endPoint);
 
   double length() {

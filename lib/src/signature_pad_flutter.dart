@@ -1,5 +1,3 @@
-library signature_pad_flutter;
-
 import 'dart:async';
 import 'dart:math';
 import 'dart:ui';
