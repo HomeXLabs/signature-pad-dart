@@ -1,14 +1,12 @@
-library signature_pad_flutter;
-
 import 'dart:async';
 import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:signature_pad/mark.dart';
-import 'package:signature_pad/signature_pad.dart';
-import 'package:signature_pad_flutter/src/painter.dart';
-import 'package:signature_pad_flutter/src/point.dart';
+import 'package:signature_pad_widget/src/mark.dart';
+import 'package:signature_pad_widget/src/painter.dart';
+import 'package:signature_pad_widget/src/point.dart';
+import 'package:signature_pad_widget/src/signature_pad.dart';
 
 class SignaturePadController {
   _SignaturePadDelegate _delegate;
@@ -31,15 +29,16 @@ class SignaturePadWidget extends StatefulWidget {
   final SignaturePadController controller;
   SignaturePadWidget(this.controller, this.opts);
 
+  @override
   State<StatefulWidget> createState() {
-    return new SignaturePadState(controller, opts);
+    return SignaturePadState(controller, opts);
   }
 }
 
 class SignaturePadState extends State<SignaturePadWidget>
     with SignaturePadBase
     implements _SignaturePadDelegate {
-  SignaturePadController _controller;
+  final SignaturePadController _controller;
   List<SPPoint> allPoints = [];
   bool _onDrawStartCalled = false;
 
@@ -51,10 +50,11 @@ class SignaturePadState extends State<SignaturePadWidget>
 
   SignaturePadPainter _currentPainter;
 
-  StreamController<DragUpdateDetails> _updateSink =
-      new StreamController.broadcast();
+  final StreamController<DragUpdateDetails> _updateSink =
+      StreamController.broadcast();
   Stream<DragUpdateDetails> get _updates => _updateSink.stream;
 
+  @override
   void initState() {
     super.initState();
     _controller._delegate = this;
@@ -62,12 +62,13 @@ class SignaturePadState extends State<SignaturePadWidget>
     _updates.listen(handleDragUpdate);
   }
 
+  @override
   Widget build(BuildContext context) {
-    _currentPainter = new SignaturePadPainter(allPoints, opts);
-    return new ClipRect(
-      child: new CustomPaint(
+    _currentPainter = SignaturePadPainter(allPoints, opts);
+    return ClipRect(
+      child: CustomPaint(
         painter: _currentPainter,
-        child: new GestureDetector(
+        child: GestureDetector(
           onTapDown: handleTap,
           onHorizontalDragUpdate: (d) => _updateSink.add(d),
           onVerticalDragUpdate: (d) => _updateSink.add(d),
@@ -86,10 +87,10 @@ class SignaturePadState extends State<SignaturePadWidget>
 
     var x = details.globalPosition.dx;
     var y = details.globalPosition.dy;
-    var offs = new Offset(x, y);
+    var offs = Offset(x, y);
     RenderBox refBox = context.findRenderObject();
     offs = refBox.globalToLocal(offs);
-    strokeBegin(new Point(offs.dx, offs.dy));
+    strokeBegin(Point(offs.dx, offs.dy));
     strokeEnd();
   }
 
@@ -98,10 +99,10 @@ class SignaturePadState extends State<SignaturePadWidget>
 
     var x = details.globalPosition.dx;
     var y = details.globalPosition.dy;
-    var offs = new Offset(x, y);
+    var offs = Offset(x, y);
     RenderBox refBox = context.findRenderObject();
     offs = refBox.globalToLocal(offs);
-    strokeUpdate(new Point(offs.dx, offs.dy));
+    strokeUpdate(Point(offs.dx, offs.dy));
   }
 
   void handleDrawStartedCallback() {
@@ -120,30 +121,34 @@ class SignaturePadState extends State<SignaturePadWidget>
   void handleDragStart(DragStartDetails details) {
     var x = details.globalPosition.dx;
     var y = details.globalPosition.dy;
-    var offs = new Offset(x, y);
+    var offs = Offset(x, y);
     RenderBox refBox = context.findRenderObject();
     offs = refBox.globalToLocal(offs);
-    strokeBegin(new Point(offs.dx, offs.dy));
+    strokeBegin(Point(offs.dx, offs.dy));
   }
 
+  @override
   Mark createMark(double x, double y, [DateTime time]) {
-    return new Mark(x, y, time ?? new DateTime.now());
+    return Mark(x, y, time ?? DateTime.now());
   }
 
+  @override
   void drawPoint(double x, double y, num size) {
     if (!_inBounds(x, y)) {
       return;
     }
-    var point = new Point(x, y);
+    var point = Point(x, y);
     setState(() {
-      allPoints.add(new SPPoint(point, size));
+      allPoints.add(SPPoint(point, size));
     });
   }
 
+  @override
   String toDataUrl([String type = 'image/png']) {
     return null;
   }
 
+  @override
   void clear() {
     super.clear();
     if (mounted) {
@@ -154,14 +159,16 @@ class SignaturePadState extends State<SignaturePadWidget>
     }
   }
 
+  @override
   Future<List<int>> getPng() {
     return _currentPainter.getPng();
   }
 
+  @override
   bool get hasSignature => _currentPainter.allPoints.isNotEmpty;
 
   bool _inBounds(double x, double y) {
-    var size = this._currentPainter.lastSize;
+    var size = _currentPainter.lastSize;
     return x >= 0 && x < size.width && y >= 0 && y < size.height;
   }
 }
